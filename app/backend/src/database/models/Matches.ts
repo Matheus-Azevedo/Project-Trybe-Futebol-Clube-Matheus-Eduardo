@@ -21,22 +21,27 @@ Match.init({
   homeTeamId: {
     type: INTEGER,
     allowNull: false,
+    field: 'home_team_id',
   },
   awayTeamId: {
     type: INTEGER,
     allowNull: false,
+    field: 'away_team_id',
   },
   homeTeamGoals: {
     type: INTEGER,
     allowNull: false,
+    field: 'home_team_goals',
   },
   awayTeamGoals: {
     type: INTEGER,
     allowNull: false,
+    field: 'away_team_goals',
   },
   inProgress: {
     type: INTEGER,
     allowNull: false,
+    field: 'in_progress',
   },
 }, {
   underscored: true,

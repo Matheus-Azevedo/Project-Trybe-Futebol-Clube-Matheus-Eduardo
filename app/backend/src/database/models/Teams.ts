@@ -13,8 +13,9 @@ Team.init({
     autoIncrement: true,
   },
   teamName: {
-    type: STRING,
+    type: STRING(100),
     allowNull: false,
+    field: 'team_name',
   },
 }, {
   underscored: true,
