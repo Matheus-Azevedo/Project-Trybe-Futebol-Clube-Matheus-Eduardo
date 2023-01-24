@@ -1,5 +1,3 @@
-// START: Criando o PR
-
 import 'dotenv/config';
 import { Options } from 'sequelize';
 
