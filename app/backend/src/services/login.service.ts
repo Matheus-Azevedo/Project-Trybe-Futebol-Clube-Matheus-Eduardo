@@ -4,13 +4,8 @@ import JWT from '../authentication/JWT';
 import Users from '../database/models/User';
 
 class LoginService {
-  private _jwt;
-  private _users;
-
-  constructor() {
-    this._jwt = new JWT();
-    this._users = Users;
-  }
+  private _jwt = new JWT();
+  private _users = Users;
 
   login = async (email: string, password: string): Promise<string | object | null> => {
     const user = await this._users.findOne({ where: { email } });
