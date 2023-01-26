@@ -13,6 +13,16 @@ class TeamsController {
       return res.status(statusCode.internalServerError).json({ message: error });
     }
   };
+
+  selectTeamById = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const result = await this._teamsService.selectTeamById(id);
+      return res.status(statusCode.ok).json(result);
+    } catch (error: unknown) {
+      return res.status(statusCode.internalServerError).json({ message: error });
+    }
+  };
 }
 
 export default TeamsController;
