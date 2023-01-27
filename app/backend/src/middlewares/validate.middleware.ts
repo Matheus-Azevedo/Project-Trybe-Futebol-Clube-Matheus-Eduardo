@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import statusCode from '../utils/status.code';
-import JWT from '../authentication/JWT';
+import JWT from '../utils/JWT';
 
 const jwt = new JWT();
 
