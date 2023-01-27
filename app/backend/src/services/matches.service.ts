@@ -25,6 +25,18 @@ class MatchesService {
     });
     return allInProgressMatches;
   };
+
+  public createMatchInProgress = async (
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) => {
+    const match = await this
+      ._matches
+      .create({ homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals, inProgress: true });
+    return match;
+  };
 }
 
 export default MatchesService;
