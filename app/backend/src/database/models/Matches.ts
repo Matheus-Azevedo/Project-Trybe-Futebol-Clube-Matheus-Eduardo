@@ -1,4 +1,4 @@
-import { Model, INTEGER } from 'sequelize';
+import { Model, INTEGER, BOOLEAN } from 'sequelize';
 import db from '.';
 
 import Teams from './Teams';
@@ -17,16 +17,21 @@ Match.init({
     type: INTEGER,
     primaryKey: true,
     autoIncrement: true,
+    allowNull: false,
   },
   homeTeamId: {
     type: INTEGER,
     allowNull: false,
     field: 'home_team_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   awayTeamId: {
     type: INTEGER,
     allowNull: false,
     field: 'away_team_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   homeTeamGoals: {
     type: INTEGER,
@@ -39,21 +44,22 @@ Match.init({
     field: 'away_team_goals',
   },
   inProgress: {
-    type: INTEGER,
+    type: BOOLEAN,
     allowNull: false,
     field: 'in_progress',
   },
 }, {
   underscored: true,
   sequelize: db,
-  modelName: 'match',
+  modelName: 'Matches',
+  tableName: 'matches',
   timestamps: false,
 });
 
-Match.belongsTo(Teams, { as: 'homeTeam', foreignKey: 'homeTeamId' });
-Match.belongsTo(Teams, { as: 'awayTeam', foreignKey: 'awayTeamId' });
+Match.belongsTo(Teams, { as: 'homeTeam', foreignKey: 'home_team_id' });
+Match.belongsTo(Teams, { as: 'awayTeam', foreignKey: 'away_team_id' });
 
-Teams.hasMany(Match, { as: 'homeMatches', foreignKey: 'homeTeamId' });
-Teams.hasMany(Match, { as: 'awayMatches', foreignKey: 'awayTeamId' });
+Teams.hasMany(Match, { as: 'homeMatches', foreignKey: 'id' });
+Teams.hasMany(Match, { as: 'awayMatches', foreignKey: 'id' });
 
 export default Match;

@@ -4,8 +4,15 @@ class MatchesService {
   private _matches = Matches;
 
   public selectAllMatches = async () => {
-    const matches = await this._matches.findAll();
-    return matches;
+    const allMatches = await this._matches.findAll();
+    return allMatches;
+  };
+
+  public selectAllInProgressMatches = async (query: string) => {
+    const allInProgressMatches = await this._matches.findAll({
+      where: { inProgress: query === 'true' },
+    });
+    return allInProgressMatches;
   };
 }
 
