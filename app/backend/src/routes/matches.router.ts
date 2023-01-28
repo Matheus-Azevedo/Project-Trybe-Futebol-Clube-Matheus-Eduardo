@@ -14,5 +14,6 @@ matchesRouter.post(
   controller.createMatchInProgress.bind(controller),
 );
 matchesRouter.patch('/:id/finish', controller.updateMatch.bind(controller));
+matchesRouter.patch('/:id', controller.updateMatchInProgress.bind(controller));
 
 export default matchesRouter;

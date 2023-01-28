@@ -44,6 +44,22 @@ class MatchesController {
       return res.status(statusCode.internalServerError).json({ message: error });
     }
   };
+
+  public updateMatchInProgress = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const { id } = req.params;
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+      const match = await this
+        ._matchesService
+        .updateMatchInProgress(id, homeTeamGoals, awayTeamGoals);
+      if (!match) {
+        return res.status(statusCode.notFound).json({ message: 'There is no match with such id!' });
+      }
+      return res.status(statusCode.ok).json(match);
+    } catch (error: unknown) {
+      return res.status(statusCode.internalServerError).json({ message: error });
+    }
+  };
 }
 
 export default MatchesController;

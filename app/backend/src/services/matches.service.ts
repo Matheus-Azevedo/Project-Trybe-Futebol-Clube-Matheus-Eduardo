@@ -56,6 +56,19 @@ class MatchesService {
     }
     return { status: statusCode.notFound, message: 'There is no match with such!' };
   };
+
+  public updateMatchInProgress = async (
+    id: string,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) => {
+    const match = await this._matches.findByPk(id);
+    if (match) {
+      await match.update({ homeTeamGoals, awayTeamGoals });
+      return match;
+    }
+    return null;
+  };
 }
 
 export default MatchesService;
