@@ -26,7 +26,20 @@ class MatchesController {
       const match = await this
         ._matchesService
         .createMatchInProgress(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
+      if (!match) {
+        return res.status(statusCode.notFound).json({ message: 'There is no team with such id!' });
+      }
       return res.status(statusCode.created).json(match);
+    } catch (error: unknown) {
+      return res.status(statusCode.internalServerError).json({ message: error });
+    }
+  };
+
+  public updateMatch = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const { id } = req.params;
+      const { status, message } = await this._matchesService.updateMatch(id);
+      return res.status(status).json(message);
     } catch (error: unknown) {
       return res.status(statusCode.internalServerError).json({ message: error });
     }

@@ -1,5 +1,6 @@
 import TeamsModel from '../database/models/Teams';
 import Matches from '../database/models/Matches';
+import statusCode from '../utils/status.code';
 
 class MatchesService {
   private _matches = Matches;
@@ -32,10 +33,28 @@ class MatchesService {
     homeTeamGoals: number,
     awayTeamGoals: number,
   ) => {
-    const match = await this
-      ._matches
-      .create({ homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals, inProgress: true });
-    return match;
+    const homeTeam = await TeamsModel.findByPk(homeTeamId);
+    const awayTeam = await TeamsModel.findByPk(awayTeamId);
+    if (homeTeam && awayTeam) {
+      const match = await this._matches.create({
+        homeTeamId,
+        awayTeamId,
+        homeTeamGoals,
+        awayTeamGoals,
+        inProgress: true,
+      });
+      return match;
+    }
+    return null;
+  };
+
+  public updateMatch = async (id: string) => {
+    const match = await this._matches.findByPk(id);
+    if (match) {
+      await match.update({ inProgress: false });
+      return { status: statusCode.ok, message: 'Finished' };
+    }
+    return { status: statusCode.notFound, message: 'There is no match with such!' };
   };
 }
 
