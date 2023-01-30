@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import TeamsService from '../services/teams.service';
-import statusCode from '../utils/status.code';
+import statusCode from '../utils/statusCode.util';
 
 class TeamsController {
   constructor(private _teamsService = new TeamsService()) {}

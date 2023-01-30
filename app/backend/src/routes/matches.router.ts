@@ -6,6 +6,7 @@ const matchesRouter = Router();
 
 const controller = new MatchesController();
 
+matchesRouter.get('/:id', controller.allMatchesByTeamIdAndProgress.bind(controller));
 matchesRouter.get('/', controller.selectMatches.bind(controller));
 matchesRouter.post(
   '/',

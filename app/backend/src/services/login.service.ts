@@ -1,6 +1,6 @@
 import bcrypt = require('bcryptjs');
 import IUser from '../interfaces/user';
-import JWT from '../utils/JWT';
+import JWT from '../utils/JWT.util';
 import Users from '../database/models/User';
 
 class LoginService {

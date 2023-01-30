@@ -1,12 +1,10 @@
 import TeamsModel from '../database/models/Teams';
 import Matches from '../database/models/Matches';
-import statusCode from '../utils/status.code';
+import statusCode from '../utils/statusCode.util';
 
 class MatchesService {
-  private _matches = Matches;
-
   public selectAllMatches = async () => {
-    const allMatches = await this._matches.findAll({
+    const allMatches = await Matches.findAll({
       attributes: { exclude: ['home_team_id', 'away_team_id'] },
       include: [
         { model: TeamsModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
@@ -17,7 +15,7 @@ class MatchesService {
   };
 
   public selectAllInProgressMatches = async (query: string) => {
-    const allInProgressMatches = await this._matches.findAll({
+    const allInProgressMatches = await Matches.findAll({
       where: { inProgress: query === 'true' },
       include: [
         { model: TeamsModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
@@ -36,7 +34,7 @@ class MatchesService {
     const homeTeam = await TeamsModel.findByPk(homeTeamId);
     const awayTeam = await TeamsModel.findByPk(awayTeamId);
     if (homeTeam && awayTeam) {
-      const match = await this._matches.create({
+      const match = await Matches.create({
         homeTeamId,
         awayTeamId,
         homeTeamGoals,
@@ -49,7 +47,7 @@ class MatchesService {
   };
 
   public updateMatch = async (id: string) => {
-    const match = await this._matches.findByPk(id);
+    const match = await Matches.findByPk(id);
     if (match) {
       await match.update({ inProgress: false });
       return { status: statusCode.ok, message: 'Finished' };
@@ -62,12 +60,23 @@ class MatchesService {
     homeTeamGoals: number,
     awayTeamGoals: number,
   ) => {
-    const match = await this._matches.findByPk(id);
+    const match = await Matches.findByPk(id);
     if (match) {
       await match.update({ homeTeamGoals, awayTeamGoals });
       return match;
     }
     return null;
+  };
+
+  public allMatchesByTeamIdAndProgress = async (id: string, inProgress: boolean) => {
+    const allMatches = await Matches.findAll({
+      where: { homeTeamId: id, inProgress },
+      attributes: { exclude: ['home_team_id', 'away_team_id'] },
+      include: [
+        { model: TeamsModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
+      ],
+    });
+    return allMatches;
   };
 }
 

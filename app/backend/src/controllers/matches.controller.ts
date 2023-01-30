@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import MatchesService from '../services/matches.service';
-import statusCode from '../utils/status.code';
+import statusCode from '../utils/statusCode.util';
 
 class MatchesController {
   constructor(private _matchesService = new MatchesService()) {}
@@ -56,6 +56,18 @@ class MatchesController {
         return res.status(statusCode.notFound).json({ message: 'There is no match with such id!' });
       }
       return res.status(statusCode.ok).json(match);
+    } catch (error: unknown) {
+      return res.status(statusCode.internalServerError).json({ message: error });
+    }
+  };
+
+  public allMatchesByTeamIdAndProgress = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const { id } = req.params;
+      const { inProgress } = req.body;
+      const matches = await this._matchesService
+        .allMatchesByTeamIdAndProgress(id, inProgress);
+      return res.status(statusCode.ok).json(matches);
     } catch (error: unknown) {
       return res.status(statusCode.internalServerError).json({ message: error });
     }

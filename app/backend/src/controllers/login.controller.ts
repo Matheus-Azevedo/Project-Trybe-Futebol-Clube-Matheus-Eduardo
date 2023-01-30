@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import LoginService from '../services/login.service';
-import statusCode from '../utils/status.code';
+import statusCode from '../utils/statusCode.util';
 
 class LoginController {
   constructor(private _userService = new LoginService()) {}

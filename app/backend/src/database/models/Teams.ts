@@ -3,7 +3,12 @@ import db from '.';
 
 class Team extends Model {
   declare id: number;
+  declare name: string;
   declare teamName: string;
+  declare homeMatches: {
+    homeTeamGoals: number;
+    awayTeamGoals: number;
+  }[];
 }
 
 Team.init({

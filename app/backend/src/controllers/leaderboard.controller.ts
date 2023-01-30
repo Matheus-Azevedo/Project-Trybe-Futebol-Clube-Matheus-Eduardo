@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import LeaderboardService from '../services/leaderboard.service';
-import statusCode from '../utils/status.code';
+import statusCode from '../utils/statusCode.util';
 
 class LeaderboardController {
   constructor(private _leaderboardService = new LeaderboardService()) {}

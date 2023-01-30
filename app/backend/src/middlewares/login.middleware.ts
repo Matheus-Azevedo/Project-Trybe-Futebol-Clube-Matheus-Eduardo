@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import statusCode from '../utils/status.code';
+import statusCode from '../utils/statusCode.util';
 
 const message = 'All fields must be filled';
 
