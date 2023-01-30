@@ -4,7 +4,7 @@ import { IHomeMatches, ITeamScore, ITeamClassification } from '../interfaces/tea
 
 class LeaderboardService {
   public totalPoints = (matches: IHomeMatches[]) => matches.reduce((acc, match) => {
-    if (match.homeTeamGoals > match.awayTeamGoals) {      
+    if (match.homeTeamGoals > match.awayTeamGoals) {
       return acc + 3;
     } if (match.homeTeamGoals === match.awayTeamGoals) {
       return acc + 1;
@@ -74,7 +74,8 @@ class LeaderboardService {
     return teams;
   };
 
-  public orderLeaderboard = (leaderboard: ITeamClassification[]) => leaderboard.sort((a, b) => Number(b.totalPoints) - Number(a.totalPoints)
+  public orderLeaderboard = (table: ITeamClassification[]) => table
+    .sort((a, b) => Number(b.totalPoints) - Number(a.totalPoints)
     || Number(b.totalVictories) - Number(a.totalVictories)
     || Number(b.goalsBalance) - Number(a.goalsBalance)
     || Number(b.goalsFavor) - Number(a.goalsFavor)
@@ -86,7 +87,6 @@ class LeaderboardService {
     const orderLeaderboard = this.orderLeaderboard(leaderboard);
     return orderLeaderboard;
   };
-    
 }
 
 export default LeaderboardService;
