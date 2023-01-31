@@ -5,9 +5,10 @@ import statusCode from '../utils/statusCode.util';
 class LeaderboardController {
   constructor(private _leaderboardService = new LeaderboardService()) {}
 
-  public selectLeaderboardTable = async (_req: Request, res: Response): Promise<Response> => {
+  public selectLeaderboardTable = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const leaderboard = await this._leaderboardService.selectLeaderboardTable();
+      const { path } = req;
+      const leaderboard = await this._leaderboardService.selectLeaderboardTable(path);
       return res.status(statusCode.ok).json(leaderboard);
     } catch (error: unknown) {
       return res.status(statusCode.internalServerError).json({ message: error });

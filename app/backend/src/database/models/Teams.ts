@@ -9,6 +9,11 @@ class Team extends Model {
     homeTeamGoals: number;
     awayTeamGoals: number;
   }[];
+
+  declare awayMatches: {
+    homeTeamGoals: number;
+    awayTeamGoals: number;
+  }[];
 }
 
 Team.init({

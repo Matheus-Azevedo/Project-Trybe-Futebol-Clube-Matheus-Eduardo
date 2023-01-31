@@ -7,6 +7,7 @@ export interface ITeamScore {
   id: number;
   teamName: string;
   homeMatches: IHomeMatches[];
+  awayMatches: IHomeMatches[];
 }
 
 export interface ITeamClassification {
