@@ -7,7 +7,6 @@ import AwayCalculator from '../utils/awayCalculator';
 class LeaderboardService {
   private _homeCalculator = new HomeCalculator();
   private _awayCalculator = new AwayCalculator();
-  private _leaderboard: ITeamClassification[] = [];
 
   public leaderboard = (teams: ITeamScore[]) => {
     const showScore = teams.map((team) => {
@@ -76,11 +75,16 @@ class LeaderboardService {
   public selectLeaderboardTable = async (path: string) => {
     const matchesByTeam = await this.searchTeamsAndMatches(path);
     if (path === '/home') {
-      this._leaderboard = this.leaderboard(matchesByTeam);
+      const leaderboard = this.leaderboard(matchesByTeam);
+      const orderedLeaderboard = this.orderLeaderboard(leaderboard);
+      return orderedLeaderboard;
     }
-    this._leaderboard = this.leaderboardAway(matchesByTeam);
-    const orderedLeaderboard = this.orderLeaderboard(this._leaderboard);
+    const leaderboard = this.leaderboardAway(matchesByTeam);
+    const orderedLeaderboard = this.orderLeaderboard(leaderboard);
     return orderedLeaderboard;
+  };
+
+  public selectAllLeaderboardTable = async () => {
   };
 }
 

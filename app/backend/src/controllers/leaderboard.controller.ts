@@ -14,6 +14,15 @@ class LeaderboardController {
       return res.status(statusCode.internalServerError).json({ message: error });
     }
   };
+
+  public selectAllLeaderboardTable = async (_req: Request, res: Response): Promise<Response> => {
+    try {
+      const leaderboard = await this._leaderboardService.selectAllLeaderboardTable();
+      return res.status(statusCode.ok).json(leaderboard);
+    } catch (error: unknown) {
+      return res.status(statusCode.internalServerError).json({ message: error });
+    }
+  };
 }
 
 export default LeaderboardController;
