@@ -12,34 +12,45 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Testes para endpoint Login', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
-
-  // let chaiHttpResponse: Response;
-
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+describe('1.Testes para endpoint Login', () => {
+  describe('quando o email não é informado', () => {
+    it('deve retornar um status 400 e a mensagem "All fields must be filled"', async () => {
+      const httpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: '', password:  'secret_admin'});
+      expect(httpResponse.status).to.equal(400)
+      expect(httpResponse.body).to.deep.equal({ message: 'All fields must be filled' })
+    });
+  });
+  describe('quando a senha não é informada', () => {
+    it('deve retornar um status 400 e a mensagem "All fields must be filled"', async () => {
+      const httpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: 'admin@admin.com', password:  ''});
+      expect(httpResponse.status).to.equal(400)
+      expect(httpResponse.body).to.deep.equal({ message: 'All fields must be filled' })
+    });
+  });
+  describe('quando o acesso não é encontrado', () => {
+    it('deve retornar um status 400 e a mensagem "Incorrect email or password"', async () => {
+      const httpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: 'naoeoadmin@admin.com', password:  'nao_e_o_secret_admin'});
+      expect(httpResponse.status).to.equal(401)
+      expect(httpResponse.body).to.deep.equal({ message: 'Incorrect email or password' })
+    });
+  });
+  describe('quando o acesso está correto', () => {
+    it('deve retornar um status 200 e uma propriedade chamada token', async () => {
+      const httpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: 'admin@admin.com', password:  'secret_admin'});
+      expect(httpResponse.status).to.equal(200)
+      expect(httpResponse.body).to.have.property('token')
+    });
   });
 });
