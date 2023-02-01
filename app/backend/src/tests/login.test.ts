@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('1.Testes para endpoint Login', () => {
+describe('1.Testes para endpoint /login', () => {
   describe('quando o email não é informado', () => {
     it('deve retornar um status 400 e a mensagem "All fields must be filled"', async () => {
       const httpResponse = await chai
