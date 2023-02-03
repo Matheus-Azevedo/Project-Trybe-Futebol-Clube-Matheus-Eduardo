@@ -8,7 +8,6 @@ class MatchesController {
   public selectMatches = async (req: Request, res: Response): Promise<Response> => {
     try {
       const { inProgress } = req.query;
-      console.log(inProgress);
       if (inProgress) {
         const matches = await this._matchesService.selectAllInProgressMatches(inProgress as string);
         return res.status(statusCode.ok).json(matches);

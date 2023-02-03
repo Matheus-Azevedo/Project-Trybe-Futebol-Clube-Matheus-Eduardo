@@ -4,9 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import User from '../database/models/User';
 
-import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
