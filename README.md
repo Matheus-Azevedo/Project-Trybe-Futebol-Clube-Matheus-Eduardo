@@ -25,7 +25,7 @@ O Trybe Futebol Clube (TFC) é um site informativo sobre partidas e classificaç
 
 1.  Clone o repositório
 
-`git clone https://github.com/seu-usuario/tfc.git` 
+`git clone git@github.com:Matheus-Azevedo/Project-Trybe-Futebol-Clube-Matheus-Eduardo.git` 
 
 2.  Instale as dependências
 
